@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    CHEAPEST FLIGHT: {{cheapest_flight["currency"]}} ${{cheapest_flight["price"]}}
+    <br>
+    <div class="accordion" id="accordionPanelsStayOpen-TripCheap">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne-TripCheap">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-TripCheap" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+            Departure - {{ cheapest_flight["city_from"][0][1] }} to
+              {% if cheapest_flight["depart_return_split_count"] %}
+              {{ cheapest_flight["city_to"][cheapest_flight["depart_return_split_count"] -1][1] }} -
+                {% if (cheapest_flight["depart_return_split_count"] -1) == 0 %}
+                Direct Flight -
+                {% elif  (cheapest_flight["depart_return_split_count"] -1) == 1 %}
+                {{ (cheapest_flight["depart_return_split_count"] -1) }} stop -
+                {% else %}
+                {{ (cheapest_flight["depart_return_split_count"] -1) }} stops -
+                {% endif %}
+              {% else %}
+              {{ cheapest_flight["city_to"][-1][1] }} -
+                {% if (cheapest_flight["city_to"]|length) - 1 == 0 %}
+                Direct Flight -
+                {% elif (cheapest_flight["city_to"]|length) - 1 == 1 %}
+                {{ (cheapest_flight["city_to"]|length) - 1 }} stop -
+                {% else %}
+                {{ (cheapest_flight["city_to"]|length) - 1 }} stops -
+                {% endif %}
+              {% endif %}
+              Travel Time: {{ cheapest_flight["total_travel_time"][0] }}
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne-TripCheap" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+          <div class="accordion-body">
+            {% if cheapest_flight["depart_return_split_count"] %}
+              {% for x in range(0, cheapest_flight["depart_return_split_count"]) %}
+              <p>{{ cheapest_flight["depart_date"][x] }} - {{ cheapest_flight["depart_time"][x] }} - {{ cheapest_flight["city_from"][x][0] }} ({{ cheapest_flight["city_from"][x][1] }}) - Flight no. {{ cheapest_flight["airline"][x] }}{{cheapest_flight["flight_num"][x]}}</p>
+              <p>Flight Time: {{ cheapest_flight["flight_time"][x] }}</p>
+              <p>{{ cheapest_flight["return_date"][x] }} - {{ cheapest_flight["return_time"][x] }} - {{ cheapest_flight["city_to"][x][0] }} ({{ cheapest_flight["city_to"][x][1] }})</p>
+              <br>
+                {% if x != (cheapest_flight["depart_return_split_count"] - 1) %}
+                <p>Layover Time: {{ cheapest_flight["layover_time"][x] }}</p>
+                <br>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {% for x in range(0, cheapest_flight["city_from"]|length) %}
+              <p>{{ cheapest_flight["depart_date"][x] }} - {{ cheapest_flight["depart_time"][x] }} - {{ cheapest_flight["city_from"][x][0] }} ({{ cheapest_flight["city_from"][x][1] }}) - Flight no. {{ cheapest_flight["airline"][x] }}{{cheapest_flight["flight_num"][x]}}</p>
+              <p>Flight Time: {{ cheapest_flight["flight_time"][x] }}</p>
+              <p>{{ cheapest_flight["return_date"][x] }} - {{ cheapest_flight["return_time"][x] }} - {{ cheapest_flight["city_to"][x][0] }} ({{ cheapest_flight["city_to"][x][1] }})</p>
+              <br>
+                {% if x != (cheapest_flight["city_from"]|length - 1) %}
+                <p>Layover Time: {{ cheapest_flight["layover_time"][x] }}</p>
+                {% endif %}
+              <br>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% if cheapest_flight["depart_return_split_count"] %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo-TripCheap">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo-TripCheap" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+            Return -
+              {% if cheapest_flight["depart_return_split_count"] %}
+              {{ cheapest_flight["city_to"][cheapest_flight["depart_return_split_count"] -1][1] }} to
+              {{ cheapest_flight["city_to"][-1][1] }} -
+                {% if (cheapest_flight["city_to"]|length - cheapest_flight["depart_return_split_count"] -1) == 0 %}
+                Direct Flight -
+                {% elif (cheapest_flight["depart_return_split_count"] -1) == 1 %}
+                {{ (cheapest_flight["city_to"]|length - cheapest_flight["depart_return_split_count"] -1) }} stop -
+                {% else %}
+                {{ (cheapest_flight["city_to"]|length - cheapest_flight["depart_return_split_count"] -1) }} stops -
+                {% endif %}
+              {% else %}
+              {{ cheapest_flight["city_to"][0][1] }} to
+              {{ cheapest_flight["city_to"][-1][1] }} -
+                {% if (cheapest_flight["city_to"]|length) - 1 == 0 %}
+                Direct Flight -
+                {% elif (cheapest_flight["city_to"]|length) - 1 == 1 %}
+                {{ (cheapest_flight["city_to"]|length) - 1 }} stop -
+                {% else %}
+                {{ (cheapest_flight["city_to"]|length) - 1 }} stops -
+                {% endif %}
+              {% endif %}
+            Travel Time: {{ cheapest_flight["total_travel_time"][1] }}
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo-TripCheap" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+          <div class="accordion-body">
+            {% for x in range(cheapest_flight["depart_return_split_count"], cheapest_flight["city_from"]|length) %}
+            <p>{{ cheapest_flight["depart_date"][x] }} - {{ cheapest_flight["depart_time"][x] }} - {{ cheapest_flight["city_from"][x][0] }} ({{ cheapest_flight["city_from"][x][1] }}) - Flight no. {{ cheapest_flight["airline"][x] }}{{cheapest_flight["flight_num"][x]}}</p>
+            <p>Flight Time: {{ cheapest_flight["flight_time"][x] }}</p>
+            <p>{{ cheapest_flight["return_date"][x] }} - {{ cheapest_flight["return_time"][x] }} - {{ cheapest_flight["city_to"][x][0] }} ({{ cheapest_flight["city_to"][x][1] }})</p>
+            <br>
+            {% if x != (cheapest_flight["city_from"]|length - 1) %}
+            <p>Layover Time: {{ cheapest_flight["layover_time"][x] }}</p>
+            {% endif %}
+            <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  {% if cheapest_flight["price"] == most_direct_flight["price"] and cheapest_flight["total_travel_time"] == most_direct_flight["total_travel_time"] %}
+  Note: The listed flight is both the cheapest and most direct flight currently available.
+  {% else %}
+    MOST DIRECT FLIGHT: {{most_direct_flight["currency"]}} ${{most_direct_flight["price"]}}
+    <br>
+    <div class="accordion" id="accordionPanelsStayOpen-TripDirect">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne-TripDirect">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne-TripDirect" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+            Departure - {{ most_direct_flight["city_from"][0][1] }} to
+              {% if most_direct_flight["depart_return_split_count"] %}
+              {{ most_direct_flight["city_to"][most_direct_flight["depart_return_split_count"] -1][1] }} -
+                {% if (most_direct_flight["depart_return_split_count"] -1) == 0 %}
+                Direct Flight -
+                {% elif  (most_direct_flight["depart_return_split_count"] -1) == 1 %}
+                {{ (most_direct_flight["depart_return_split_count"] -1) }} stop -
+                {% else %}
+                {{ (most_direct_flight["depart_return_split_count"] -1) }} stops -
+                {% endif %}
+              {% else %}
+              {{ most_direct_flight["city_to"][-1][1] }} -
+                {% if (most_direct_flight["city_to"]|length) - 1 == 0 %}
+                Direct Flight -
+                {% else %}
+                {{ (most_direct_flight["city_to"]|length) - 1 }} stops -
+                {% endif %}
+              {% endif %}
+              Travel Time: {{ most_direct_flight["total_travel_time"][0] }}
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne-TripDirect" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+          <div class="accordion-body">
+            {% if most_direct_flight["depart_return_split_count"] %}
+              {% for x in range(0, most_direct_flight["depart_return_split_count"]) %}
+              <p>{{ most_direct_flight["depart_date"][x] }} - {{ most_direct_flight["depart_time"][x] }} - {{ most_direct_flight["city_from"][x][0] }} ({{ most_direct_flight["city_from"][x][1] }}) - Flight no. {{ most_direct_flight["airline"][x] }}{{most_direct_flight["flight_num"][x]}}</p>
+              <p>Flight Time: {{ most_direct_flight["flight_time"][x] }}</p>
+              <p>{{ most_direct_flight["return_date"][x] }} - {{ most_direct_flight["return_time"][x] }} - {{ most_direct_flight["city_to"][x][0] }} ({{ most_direct_flight["city_to"][x][1] }})</p>
+              <br>
+                {% if x != (most_direct_flight["depart_return_split_count"] - 1) %}
+                <p>Layover Time: {{ most_direct_flight["layover_time"][x] }}</p>
+                <br>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {% for x in range(0, most_direct_flight["city_from"]|length) %}
+              <p>{{ most_direct_flight["depart_date"][x] }} - {{ most_direct_flight["depart_time"][x] }} - {{ most_direct_flight["city_from"][x][0] }} ({{ most_direct_flight["city_from"][x][1] }}) - Flight no. {{ most_direct_flight["airline"][x] }}{{most_direct_flight["flight_num"][x]}}</p>
+              <p>Flight Time: {{ most_direct_flight["flight_time"][x] }}</p>
+              <p>{{ most_direct_flight["return_date"][x] }} - {{ most_direct_flight["return_time"][x] }} - {{ most_direct_flight["city_to"][x][0] }} ({{ most_direct_flight["city_to"][x][1] }})</p>
+              <br>
+                {% if x != (most_direct_flight["city_from"]|length - 1) %}
+                <p>Layover Time: {{ most_direct_flight["layover_time"][x] }}</p>
+                {% endif %}
+              <br>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% if most_direct_flight["depart_return_split_count"] %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo-TripDirect">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo-TripDirect" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+            Return -
+              {% if most_direct_flight["depart_return_split_count"] %}
+              {{ most_direct_flight["city_to"][most_direct_flight["depart_return_split_count"] -1][1] }} to
+              {{ most_direct_flight["city_to"][-1][1] }} -
+                {% if (most_direct_flight["city_to"]|length - most_direct_flight["depart_return_split_count"] -1) == 0 %}
+                Direct Flight -
+                {% elif (most_direct_flight["depart_return_split_count"] -1) == 1 %}
+                {{ (most_direct_flight["city_to"]|length - most_direct_flight["depart_return_split_count"] -1) }} stop -
+                {% else %}
+                {{ (most_direct_flight["city_to"]|length - most_direct_flight["depart_return_split_count"] -1) }} stops -
+                {% endif %}
+              {% else %}
+              {{ most_direct_flight["city_to"][0][1] }} to
+              {{ most_direct_flight["city_to"][-1][1] }} -
+                {% if (most_direct_flight["city_to"]|length) - 1 == 0 %}
+                Direct Flight -
+                {% elif (most_direct_flight["city_to"]|length) - 1 == 1 %}
+                {{ (most_direct_flight["city_to"]|length) - 1 }} stop -
+                {% else %}
+                {{ (most_direct_flight["city_to"]|length) - 1 }} stops -
+                {% endif %}
+              {% endif %}
+            Travel Time: {{ most_direct_flight["total_travel_time"][1] }}
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo-TripDirect" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+          <div class="accordion-body">
+            {% for x in range(most_direct_flight["depart_return_split_count"], most_direct_flight["city_from"]|length) %}
+            <p>{{ most_direct_flight["depart_date"][x] }} - {{ most_direct_flight["depart_time"][x] }} - {{ most_direct_flight["city_from"][x][0] }} ({{ most_direct_flight["city_from"][x][1] }}) - Flight no. {{ most_direct_flight["airline"][x] }}{{most_direct_flight["flight_num"][x]}}</p>
+            <p>Flight Time: {{ most_direct_flight["flight_time"][x] }}</p>
+            <p>{{ most_direct_flight["return_date"][x] }} - {{ most_direct_flight["return_time"][x] }} - {{ most_direct_flight["city_to"][x][0] }} ({{ most_direct_flight["city_to"][x][1] }})</p>
+            <br>
+            {% if x != (most_direct_flight["city_from"]|length - 1) %}
+            <p>Layover Time: {{ most_direct_flight["layover_time"][x] }}</p>
+            {% endif %}
+            <br>
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
