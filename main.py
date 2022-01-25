@@ -9,8 +9,7 @@ import requests
 
 app = Flask(__name__)
 # CSRF_TOKEN to use FlaskForms - stored as env variable
-app.config["SECRET_KEY"] = "gfdhadh"
-    # os.environ['CSRF_TOKEN']
+app.config["SECRET_KEY"] = os.environ['CSRF_TOKEN']
 # Enable Bootstrap for WTForms
 Bootstrap(app)
 
