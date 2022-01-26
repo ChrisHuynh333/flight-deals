@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from forms import RoundTripFlightSearchForm, OneWayTripFlightSearchForm
 from flight_search import FlightSearch
 import os
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -34,15 +35,41 @@ def trip_search(trip_type):
         flight_type = trip_type
         currency = form.currency.data
         date_from_string = date_from.strftime("%d/%m/%Y")
+
         if trip_type == "round":
             date_to = form.date_to.data
             nights_stay = (date_to - date_from).days
             date_to_string = date_to.strftime("%d/%m/%Y")
+
+        today = datetime.today().date()
+        if today > date_from or today > date_to:
+            flash("Your travel dates cannot be before today's date.")
+            return redirect(url_for("trip_search", trip_type=trip_type))
+
+        if trip_type == "round":
+            if date_from > date_to:
+                flash("You may not have a return date earlier than your departure date.")
+                return redirect(url_for("trip_search", trip_type=trip_type))
+
+        if int(adults) + int(children) + int(infants) > 9:
+            flash("You may only search for flights with a total of 9 passengers.")
+            return redirect(url_for("trip_search", trip_type=trip_type))
+
         for x in range(0, 7):
             flight_search = FlightSearch()
-            departure_city, departure_city_iata = flight_search.city_iata_search(form.departure_city.data)
-            destination_city, destination_city_iata = flight_search.city_iata_search(form.destination_city.data)
             stopovers = x
+            try:
+                departure_city, departure_city_iata = flight_search.city_iata_search(form.departure_city.data)
+            except KeyError:
+                flash("The departure city you entered could not be found. Please ensure the spelling of the city or "
+                      "the three letter airport IATA code is correct.")
+                return redirect(url_for("trip_search", trip_type=trip_type))
+            try:
+                destination_city, destination_city_iata = flight_search.city_iata_search(form.destination_city.data)
+            except KeyError:
+                flash("The destination city you entered could not be found. Please ensure the spelling of the city or "
+                      "the three letter airport IATA code is correct.")
+                return redirect(url_for("trip_search", trip_type=trip_type))
             try:
                 parameters = {
                     "fly_from": departure_city_iata,
