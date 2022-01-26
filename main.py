@@ -105,7 +105,7 @@ def trip_search(trip_type):
                     continue
         return render_template("flight_info.html", most_direct_flight=most_direct_flight, cheapest_flight=cheapest_flight, no_flights_message=no_flights_message,
                                trip_type="one_way")
-    return render_template("one_way_trip_search.html", form=form)
+    return render_template("one_way_trip_search.html", form=form, trip_type=trip_type)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

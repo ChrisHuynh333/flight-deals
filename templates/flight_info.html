@@ -203,7 +203,6 @@
             <p>Layover Time: {{ most_direct_flight["layover_time"][x] }}</p>
             {% endif %}
             <br>
-
             {% endfor %}
           </div>
         </div>
@@ -211,5 +210,6 @@
       {% endif %}
     </div>
   {% endif %}
+  <a href="{{ url_for('home') }}">Search for another flight</a>
 </div>
 {% endblock %}

@@ -1,20 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 {% import "bootstrap/wtf.html" as wtf %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <p>{{ message }}</p>
-          {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <div class="col-lg-8 col-md-10 mx-auto content">
-        {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    <div class="container-fluid forms-container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+            {% if trip_type == "oneway" %}
+            <a href="{{ url_for('trip_search', trip_type='round') }}">Search Round Trip</a>
+            {% else %}
+            <a href="{{ url_for('trip_search', trip_type='oneway') }}">Search One-Way Trip</a>
+            {% endif %}
+        </div>
     </div>
-</body>
-</html>
+
+{% endblock %}
