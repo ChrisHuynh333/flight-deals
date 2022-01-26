@@ -2,9 +2,7 @@ from flask import Flask, render_template, url_for, redirect, flash, request, abo
 from flask_bootstrap import Bootstrap
 from forms import RoundTripFlightSearchForm, OneWayTripFlightSearchForm
 from flight_search import FlightSearch
-from datetime import datetime, timedelta
 import os
-import requests
 
 
 app = Flask(__name__)
@@ -59,10 +57,10 @@ def trip_search(trip_type):
                     "curr": currency
                 }
                 if trip_type == "round":
-                    parameters["return_from"]: date_to_string
-                    parameters["return_to"]: date_to_string
-                    parameters["nights_in_dst_from"]: (nights_stay - 2)
-                    parameters["nights_in_dst_to"]: (nights_stay + 2)
+                    parameters["return_from"] = date_to_string
+                    parameters["return_to"] = date_to_string
+                    parameters["nights_in_dst_from"] = (nights_stay - 2)
+                    parameters["nights_in_dst_to"] = (nights_stay + 2)
 
                 flight = flight_search.flight_search(parameters, destination_city)
                 if flight["price"] and not cheapest_flight:

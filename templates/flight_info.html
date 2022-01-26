@@ -106,7 +106,7 @@
       {% endif %}
     </div>
   {% if cheapest_flight["price"] == most_direct_flight["price"] and cheapest_flight["total_travel_time"] == most_direct_flight["total_travel_time"] %}
-  Note: The listed flight is both the cheapest and most direct flight currently available.
+  Note: The listed flight is both the cheapest and most direct flight currencyently available.
   {% else %}
     MOST DIRECT FLIGHT: {{most_direct_flight["currency"]}} ${{most_direct_flight["price"]}}
     <br>

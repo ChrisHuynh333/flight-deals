@@ -101,7 +101,8 @@ class FlightSearch:
             "layover_time": self.layover_time,
             "total_travel_time": self.total_travel_time,
             "airline": self.airline,
-            "flight_num": self.flight_num
+            "flight_num": self.flight_num,
+            "currency": flight_parameters["curr"]
         }
         if flight_parameters["flight_type"] == "round":
             flight_output["depart_return_split_count"] = self.depart_return_split_count
