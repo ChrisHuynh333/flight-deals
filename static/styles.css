@@ -1,3 +1,46 @@
-.forms-container {
+.page-container {
     padding: 10% 25% 0 25%;
+}
+
+/* --- flight_info styles --- */
+.accordion {
+    padding-bottom: 25px;
+}
+
+.flight-type-header {
+    float: left;
+}
+
+.flight-price-header {
+    float: right;
+}
+
+.depart-return-result-tab-left {
+    width: 33.33%;
+    text-align: left;
+}
+
+.depart-return-result-tab-center {
+    width: 33.33%;
+    text-align: center;
+}
+
+.depart-return-result-tab-right {
+    width: 25%;
+    text-align: right;
+}
+
+.flight-details {
+    padding-left: 50px !important;
+}
+
+.flight-time-text, .layover-text {
+    color: gray;
+    font-size: 14px;
+}
+
+.layover-line {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }

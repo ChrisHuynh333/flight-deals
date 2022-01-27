@@ -29,6 +29,7 @@ def trip_search(trip_type):
         cheapest_flight = {}
         no_flights_message = None
         date_from = form.date_from.data
+        date_to = None
         adults = form.adults.data
         children = form.children.data
         infants = form.infants.data
@@ -42,9 +43,14 @@ def trip_search(trip_type):
             date_to_string = date_to.strftime("%d/%m/%Y")
 
         today = datetime.today().date()
-        if today > date_from or today > date_to:
-            flash("Your travel dates cannot be before today's date.")
-            return redirect(url_for("trip_search", trip_type=trip_type))
+        if today > date_from:
+            if date_to:
+                if today > date_to:
+                    flash("Your travel dates cannot be before today's date.")
+                    return redirect(url_for("trip_search", trip_type=trip_type))
+            else:
+                flash("Your travel dates cannot be before today's date.")
+                return redirect(url_for("trip_search", trip_type=trip_type))
 
         if trip_type == "round":
             if date_from > date_to:
@@ -105,7 +111,7 @@ def trip_search(trip_type):
                     continue
         return render_template("flight_info.html", most_direct_flight=most_direct_flight, cheapest_flight=cheapest_flight, no_flights_message=no_flights_message,
                                trip_type="one_way")
-    return render_template("one_way_trip_search.html", form=form, trip_type=trip_type)
+    return render_template("trip_search.html", form=form, trip_type=trip_type)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
