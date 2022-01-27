@@ -39,7 +39,20 @@
     box-shadow: none !important;
 }
 
+/* --- trip_search.html styles --- */
+.trip-search-page-image {
+    background-image: url(images/flight.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 /* --- flight_info.html styles --- */
+.flight-info-page-image {
+    background-image: url(images/warmth.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .accordion {
     padding-bottom: 25px;
 }
