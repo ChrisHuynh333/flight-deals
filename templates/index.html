@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    Welcome to Chris' Flight Search, where you'll find the cheapest flights available.
-    <br>
-    <a href="{{ url_for('trip_search', trip_type='oneway') }}">One-Way</a>
-    <a href="{{ url_for('trip_search', trip_type='round') }}">Round</a>
+{% extends "base.html" %}
+
+{% block content %}
+<body class="main-page-image">
+    <div class="title-text">
+        <h2>Welcome to Chris' Cheap Flight Search</h2>
+        <h4>Paradise is just a click away</h4>
+        <div class="row">
+            <div class="col-lg-6">
+                <a href="{{ url_for('trip_search', trip_type='oneway') }}"><button class="btn btn-outline-primary btn-lg title-page-button">Search One-Way</button></a></h3>
+            </div>
+            <div class="col-lg-6">
+                <a href="{{ url_for('trip_search', trip_type='round') }}"><button class="btn btn-outline-primary btn-lg title-page-button">Search Round</button></a></h3>
+            </div>
+        </div>
+    </div>
 </body>
-</html>
+
+{% endblock %}

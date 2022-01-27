@@ -2,7 +2,44 @@
     padding: 10% 25% 0 25%;
 }
 
-/* --- flight_info styles --- */
+/* --- index.html styles --- */
+.main-page-image {
+    background-image: url(images/snow.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.title-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FC5185;
+    text-align: center;
+}
+
+.title-page-link {
+    color: inherit;
+    width: 50%;
+}
+
+.title-page-button {
+    color: white !important;
+    border-color: #FC5185 !important;
+    background-color: #FC5185 !important;
+}
+
+.title-page-button:hover {
+    border-color: #3FC1C9 !important;
+    background-color: #3FC1C9 !important;
+}
+
+.title-page-button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* --- flight_info.html styles --- */
 .accordion {
     padding-bottom: 25px;
 }
