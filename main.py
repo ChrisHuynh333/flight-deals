@@ -24,7 +24,7 @@ def trip_search(trip_type):
         form = OneWayTripFlightSearchForm()
     else:
         form = RoundTripFlightSearchForm()
-    if form.validate_on_submit():
+    if request.method == "POST":
         most_direct_flight = {}
         cheapest_flight = {}
         no_flights_message = None

@@ -39,14 +39,82 @@
     box-shadow: none !important;
 }
 
-/* --- trip_search.html styles --- */
+/* --- trip-search.html styles --- */
 .trip-search-page-image {
     background-image: url(images/flight.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-/* --- flight_info.html styles --- */
+.search-form-row {
+    padding-bottom: 10px;
+}
+
+.search-input-field {
+    width: 40%;
+    border: 2px solid gray;
+    height: 50px;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+
+.search-input-field:focus, .passenger-select:focus, .date-select:focus, .currency-select:focus {
+    outline: 1px solid #FC5185;
+    border: 2px solid #FC5185;
+}
+
+.form-label {
+    color: #FC5185;
+    font-size: 16px;
+}
+
+.passenger-select, .date-select {
+    width: 35%;
+    border: 1px solid gray;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    text-align: center;
+}
+
+.passenger-form-row, .date-form-row {
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.date-select {
+    width: 75%;
+}
+
+.currency-select {
+    width: 35%;
+    border: 1px solid gray;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    text-align: center;
+    margin-left: 50%;
+}
+
+.submit-button {
+    color: white !important;
+    border-color: #FC5185 !important;
+    background-color: #FC5185 !important;
+    width: 100%;
+    border-radius: 25px;
+}
+
+.submit-button:hover {
+    border-color: #3FC1C9 !important;
+    background-color: #3FC1C9 !important;
+}
+
+
+/* --- flight-info.html styles --- */
 .flight-info-page-image {
     background-image: url(images/warmth.jpg);
     background-size: cover;
