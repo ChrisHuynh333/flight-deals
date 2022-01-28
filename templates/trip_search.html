@@ -11,8 +11,52 @@
               {% endfor %}
             {% endif %}
         {% endwith %}
-        <div class="col-lg-8 col-md-10 mx-auto">
-            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <div class="col-lg-10 col-md-12 mx-auto">
+            <form method="POST">
+                <div class="row search-form-row">
+                    {{ form.departure_city(class_="search-input-field depart-field") }}
+                    {{ form.destination_city(class_="search-input-field") }}
+                </div>
+                <div class="row passenger-form-row">
+                    <div class="col-lg-3">
+                        <strong>{{ form.adults.label(class_="form-label") }}</strong>
+                        {{ form.adults(class_="passenger-select") }}
+                    </div>
+                    <div class="col-lg-3">
+                        <strong>{{ form.children.label(class_="form-label") }}</strong>
+                        {{ form.children(class_="passenger-select") }}
+                    </div>
+                    <div class="col-lg-3">
+                        <strong>{{ form.infants.label(class_="form-label") }}</strong>
+                        {{ form.infants(class_="passenger-select") }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ form.currency(class_="currency-select") }}
+                    </div>
+                </div>
+                <div class="row date-form-row">
+                    {% if trip_type == "oneway" %}
+                        <div class="col-lg-8">
+                            <strong>{{ form.date_from.label(class_="form-label") }}</strong>
+                            {{ form.date_from(class_="date-select") }}
+                        </div>
+                    {% else %}
+                        <div class="col-lg-4">
+                            <strong>{{ form.date_from.label(class_="form-label") }}</strong>
+                            {{ form.date_from(class_="date-select") }}
+                        </div>
+                        <div class="col-lg-4">
+                            <strong>{{ form.date_to.label(class_="form-label") }}</strong>
+                            {{ form.date_to(class_="date-select") }}
+                        </div>
+                    {% endif %}
+                        <div class="col-lg-4">
+                            {{ form.submit(class_="submit-button") }}
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
             {% if trip_type == "oneway" %}
             <a href="{{ url_for('trip_search', trip_type='round') }}">Search Round Trip</a>
             {% else %}
