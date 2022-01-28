@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, flash, request, abort
 from flask_bootstrap import Bootstrap
-from forms import RoundTripFlightSearchForm, OneWayTripFlightSearchForm
+from forms import FlightSearchForm
 from flight_search import FlightSearch
 import os
 from datetime import datetime
@@ -20,10 +20,7 @@ def home():
 
 @app.route(f"/<string:trip_type>_trip_search", methods=["GET", "POST"])
 def trip_search(trip_type):
-    if trip_type == "oneway":
-        form = OneWayTripFlightSearchForm()
-    else:
-        form = RoundTripFlightSearchForm()
+    form = FlightSearchForm()
     if request.method == "POST":
         most_direct_flight = {}
         cheapest_flight = {}
@@ -110,7 +107,7 @@ def trip_search(trip_type):
                 else:
                     continue
         return render_template("flight_info.html", most_direct_flight=most_direct_flight, cheapest_flight=cheapest_flight, no_flights_message=no_flights_message,
-                               trip_type="one_way")
+                               trip_type=trip_type)
     return render_template("trip_search.html", form=form, trip_type=trip_type)
 
 if __name__ == "__main__":
