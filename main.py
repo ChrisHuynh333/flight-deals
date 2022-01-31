@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from forms import FlightSearchForm
 from flight_search import FlightSearch
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
@@ -40,13 +40,14 @@ def trip_search(trip_type):
             date_to_string = date_to.strftime("%d/%m/%Y")
 
         today = datetime.today().date()
-        if today > date_from:
+        tomorrow = today + timedelta(days=1)
+        if tomorrow > date_from:
             if date_to:
-                if today > date_to:
-                    flash("Your travel dates cannot be before today's date.")
+                if tomorrow > date_to:
+                    flash("Your travel dates cannot be before tomorrow's date.")
                     return redirect(url_for("trip_search", trip_type=trip_type))
             else:
-                flash("Your travel dates cannot be before today's date.")
+                flash("Your travel dates cannot be before tomorrow's date.")
                 return redirect(url_for("trip_search", trip_type=trip_type))
 
         if trip_type == "round":
@@ -106,6 +107,16 @@ def trip_search(trip_type):
                     no_flights_message = "Sorry, there are no available flights for this destination with these dates."
                 else:
                     continue
+
+            # try:
+            #     if flight:
+            #         continue
+            # except:
+            #     no_flights_message = "Sorry, there are no available flights for this destination with these dates."
+            #     most_direct_flight = None
+            #     cheapest_flight = None
+            #     trip_type = None
+
         return render_template("flight_info.html", most_direct_flight=most_direct_flight, cheapest_flight=cheapest_flight, no_flights_message=no_flights_message,
                                trip_type=trip_type)
     return render_template("trip_search.html", form=form, trip_type=trip_type)

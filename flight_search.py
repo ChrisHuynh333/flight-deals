@@ -39,11 +39,12 @@ class FlightSearch:
             }
         response = requests.get(url=location_endpoint, headers=headers, params=parameters)
         results = response.json()["locations"]
+
         if len(city) == 3:
             city_name = results[0]["city"]["name"]
             iata_code = results[0]["code"]
         else:
-            city_name = city.title()
+            city_name = results[0]["name"]
             iata_code = results[0]["code"]
         return city_name, iata_code
 

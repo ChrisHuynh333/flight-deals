@@ -46,6 +46,25 @@
     background-repeat: no-repeat;
 }
 
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.switch-search {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.switch-search-link, .note-text {
+    color: #FC5185;
+    text-decoration: inherit;
+}
+
+.switch-search-link:hover {
+    color: #3FC1C9;
+}
+
 .search-form-row {
     padding-bottom: 10px;
 }
@@ -125,12 +144,26 @@
     padding-bottom: 25px;
 }
 
+.accordion-button:focus {
+    outline: 0 !important;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #3FC1C9;
+    background-color: transparent !important;
+}
+
 .flight-type-header {
     float: left;
+    padding-bottom: 10px;
+    color: #FC5185;
 }
 
 .flight-price-header {
     float: right;
+    padding-bottom: 10px;
+    color: #FC5185;
 }
 
 .depart-return-result-tab-left {

@@ -7,7 +7,7 @@
         {% with messages = get_flashed_messages() %}
             {% if messages %}
               {% for message in messages %}
-                <p>{{ message }}</p>
+                <p class="error-message">{{ message }}</p>
               {% endfor %}
             {% endif %}
         {% endwith %}
@@ -57,12 +57,12 @@
             </form>
         </div>
     </div>
-            {% if trip_type == "oneway" %}
-            <a href="{{ url_for('trip_search', trip_type='round') }}">Search Round Trip</a>
-            {% else %}
-            <a href="{{ url_for('trip_search', trip_type='oneway') }}">Search One-Way Trip</a>
-            {% endif %}
-        </div>
+    <div class="container-fluid switch-search">
+    {% if trip_type == "oneway" %}
+        <strong><a class="switch-search-link" href="{{ url_for('trip_search', trip_type='round') }}">Switch to Round Trip Search</a></strong>
+        {% else %}
+        <strong><a class="switch-search-link" href="{{ url_for('trip_search', trip_type='oneway') }}">Switch to One-Way Trip Search</a></strong>
+        {% endif %}
     </div>
 </body>
 {% endblock %}
