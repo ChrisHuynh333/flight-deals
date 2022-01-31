@@ -3,8 +3,8 @@
 {% block content %}
 <body class="flight-info-page-image">
   <div class="container-fluid page-container">
-    {% if no_flights_message %}
-    <p class="error-message">{{ no_flights_message }}</p>
+    {% if error_message %}
+    <p class="error-message">{{ error_message }}</p>
     {% else %}
       <h5 class="flight-type-header">Cheapest flight route:</h5>
       <h5 class="flight-price-header">{{cheapest_flight["currency"]}} ${{cheapest_flight["price"]}}</h5>
