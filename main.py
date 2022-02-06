@@ -95,6 +95,11 @@ def trip_search(trip_type):
         # This will speed up the application and flight searches.
         city_code_depart = False
         city_code_destination = False
+        
+        # If we find a most_direct_flight, found_most_direct_flight will be turned True, and we will set x to the
+        # highest iteration futher below as we are only then interested in the cheapest flight, so we'll max out
+        # the number of stopovers allowed, and the first flight returned will be the cheapest available.
+        found_most_direct_flight = False
 
         # We will do 6 flight searches (range(0, 6)). The count iteration pertains to the number of max
         # stopovers/layovers we will pass to the Tequila API. We care about increasing the number of stops because
@@ -206,7 +211,10 @@ def trip_search(trip_type):
                 # This way, the user will be returned both the most_direct_flight and cheapest_flight to compare.
                 if flight["price"] and not most_direct_flight:
                     most_direct_flight = flight
-
+                    found_most_direct_flight = True
+                
+                if most_direct_flight and found_most_direct_flight:
+                    x = 4
             # As mentioned previously, I found roughly 4 stopovers to be the max number required to fly anywhere in the
             # world from location. Therefore, allowed the search algorithm to go up to 5 stopovers. If a flight was not
             # found and returned after this many searches, it's most likely that a flight does not currently exist for
